@@ -1358,7 +1358,7 @@ void setup_turtle() {
 
   for (int i = 0; i < 7; i++) {
     String command = commands[i];
-    sendComman(command);
+    sendCommand(command);
   }
 
  // arc(0.0, 0.0, 10.0, 10.0, 0.0, '1');
@@ -1384,8 +1384,8 @@ void pen_down(){
 
   String command1 = "GO0 F50 Z50";
   String command2 = "GO0 F6500";
-  sendComman(command1);
-  sendComman(command2);
+  sendCommand(command1);
+  sendCommand(command2);
   
 }
 
@@ -1393,17 +1393,17 @@ void pen_up() {
 
   String command1 = "GO1 F50 Z90";
   String command2 = "GO0 F6500";
-  sendComman(command1);
-  sendComman(command2);
+  sendCommand(command1);
+  sendCommand(command2);
 }
 
-void move(float distance, float angle) {
-  float x, y;
-  angle = ( angle * 3.1415 ) / 180;
-  x = distance*cos(angle);
-  y = distance*sin(angle);
+void move(float x, float y) {
+  // float x, y;
+  // angle = ( angle * 3.1415 ) / 180;
+  // x = distance*cos(angle);
+  // y = distance*sin(angle);
   String command = "G00 X"+ String(x,3) + " Y" + String(y,3);
-  sendComman(command);
+  sendCommand(command);
   
 }
 
@@ -1412,9 +1412,9 @@ void go_to(float x, float y) {
   String command2 =  "G00 X"+ String(x,3) + " Y" + String(y,3);
   String command3 = "G91";
 
-  sendComman(command1);
-  sendComman(command2);
-  sendComman(command3);
+  sendCommand(command1);
+  sendCommand(command2);
+  sendCommand(command3);
   
 }
 
@@ -1441,20 +1441,20 @@ void loop_turtle()
 
       char first_char = command[0];
       int i = 2;
-      if (first_char == 'm' || first_char == 'g'){
+      if (first_char == 'M' || first_char == 'G'){
         float par1 = read_number(command, &i);
         i++;
         float par2 = read_number(command, &i);
-        if (first_char == 'm') move(par1, par2);
-        else if (first_char == 'g') go_to(par, par2);
+        if (first_char == 'M') move(par1, par2);
+        else if (first_char == 'G') go_to(par, par2);
 
-      } else if (first_char == 'u') {
+      } else if (first_char == 'U') {
         up();
-      } else if (first_char == 'd') {
+      } else if (first_char == 'D') {
         down();
-      } else if (first_char == 'h') {
+      } else if (first_char == 'H') {
         teleport(homeX,homeY);
-      } else if (first_char == 'c') {
+      } else if (first_char == 'C') {
         //TODO circle
       }
 
