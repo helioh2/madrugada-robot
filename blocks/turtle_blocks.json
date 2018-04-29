@@ -1,0 +1,102 @@
+[{
+  "type": "move_forward",
+  "message0": "andar para a frente %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "distancia",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "move_backward",
+  "message0": "andar para trás %1",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "distancia",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "pen_up",
+  "message0": "levantar caneta",
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "pen_down",
+  "message0": "abaixar caneta",
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "go_to",
+  "message0": "vai para x %1 y %2",
+  "args0": [
+    {
+      "type": "input_value",
+      "name": "X",
+      "check": "Number"
+    },
+    {
+      "type": "input_value",
+      "name": "Y",
+      "check": "Number"
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+},
+{
+  "type": "turn",
+  "message0": "girar %1 %2 graus",
+  "args0": [
+    {
+      "type": "field_dropdown",
+      "name": "option",
+      "options": [
+        [
+          "à direita",
+          "RIGHT"
+        ],
+        [
+          "à esquerda",
+          "LEFT"
+        ]
+      ]
+    },
+    {
+      "type": "input_value",
+      "name": "NAME",
+      "check": "Number"
+    }
+  ],
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+}]
