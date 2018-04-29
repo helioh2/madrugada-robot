@@ -6,4 +6,12 @@ The physical scheme and firmware was based on the drawing robot Makelangelo: htt
 
 This project uses only open source software and hardware.
 
+# Installing
+
+Make sure to install Flask:
+```
+sudo apt-get install python3-flask
+```
+
+Then run `run.sh`. If it does not run, make sure you have permission: `chmod +x ./run.sh`.
  

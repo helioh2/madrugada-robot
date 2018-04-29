@@ -1,14 +1,5 @@
 import unittest, math
-from madrugada_turtle import MadrugadaTurtle
-
-class BluetoothSocketMock():
-
-    def __init__(self, value=0):
-        pass
-
-    def send(self, data):
-        print("Teste enviando ao bluetooth:", data)
-
+from madrugada_turtle import MadrugadaTurtle, BluetoothSocketMock
 
 class TestTurtle(unittest.TestCase):
 

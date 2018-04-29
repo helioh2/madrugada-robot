@@ -30,6 +30,11 @@ class BluetoothConnection:
 	def getInfo(self):
 		return self.bd_addr, self.port
 
+class BluetoothSocketMock():
+
+    def send(self, data):
+        print("Teste enviando ao bluetooth:", data)
+
 class MadrugadaTurtle:
 
 	def __init__(self, sock, 
@@ -90,6 +95,12 @@ class MadrugadaTurtle:
 	def turn(self, angle):
 		self.angle = (self.angle + angle) % 360
 		print(self.angle)
+
+	def turn_right(self, angle):
+		self.turn(-angle)
+
+	def turn_left(self, angle):
+		self.turn(angle)
 
 	def pen_up(self):
 		self.pen_is_down = False

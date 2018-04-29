@@ -35,6 +35,9 @@
   <p>
     <button onclick="showCode()">Show Python</button>
   </p>
+  <p>
+    <button onclick="executeCode()">Executar!!!</button>
+  </p>
 
   <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
 
@@ -369,26 +372,9 @@
     <category name="Functions" colour="#9A5CA6" custom="PROCEDURE"></category>
   </xml>
 
+  <h3></h3>
+
   <script>
-
-
-
-    // var forwardJson = {
-    //     "type": "move_forward",
-    //     "message0": "avançar por %1",
-    //     "args0": [
-    //       {
-    //         "type": "input_value",
-    //         "name": "distancia",
-    //         "check": "Number"
-    //       }
-    //     ],
-    //     "previousStatement": null,
-    //     "nextStatement": null,
-    //     "colour": 230,
-    //     "tooltip": "",
-    //     "helpUrl": ""
-    // };
       var workspace;
       
       $(document).ready(function () {
@@ -403,7 +389,6 @@
           });
 
        
-
         console.log(jsonBlocks[0]);
         jsonBlocks.forEach(element => {
             console.log(element.type);
@@ -455,6 +440,30 @@
       var code = Blockly.Python.workspaceToCode(workspace);
       alert(code);
     }
+
+    function executeCode() {
+
+      var code = Blockly.Python.workspaceToCode(workspace);
+      var url="/executeCode";
+
+      $.ajax({
+          type: "POST",
+          url: url,
+          data: code,
+          cache: false,
+          dataType: "text",
+          beforeSend: function() {
+              $("h3").html("Executando seus comandos!!");
+          },
+          error: function() {
+              $("h3").html("Há algum problema!");
+          },
+          success: function(retorno) {
+              $("h3").html("Comandos executados com sucesso!");
+          }
+      
+    });
+  }
 
   </script>
 
