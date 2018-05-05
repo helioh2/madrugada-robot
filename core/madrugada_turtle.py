@@ -5,7 +5,17 @@ import math
 
 class BluetoothConnection:
 
-	def __init__(self):
+	def getInfo(self):
+		return self.bd_addr, self.port
+
+	def getNearbyDevices(self):
+		return bluetooth.discover_devices()
+
+	def selectDevice(self, device_addr):
+		self.bd_addr = device_addr
+		self.port = 1
+
+	def setupOnTerminal(self):
 		#Look for all Bluetooth devices
 		#the computer knows about.
 		print("Searching for devices...")
@@ -26,9 +36,6 @@ class BluetoothConnection:
 		print("You have selected", bluetooth.lookup_name(nearby_devices[selection]))
 		self.bd_addr = nearby_devices[selection]
 		self.port = 1
-
-	def getInfo(self):
-		return self.bd_addr, self.port
 
 class BluetoothSocketMock():
 
@@ -57,7 +64,7 @@ class MadrugadaTurtle:
 		return self.xlimits[0] <= x <= self.xlimits[1] \
 				and self.ylimits[0] <= y <= self.ylimits[1]
 
-	def forward(self, distance):
+	def forward(self, distance=0):
 
 		dx, dy = self.calcDxDy(distance, self.angle)
 
@@ -74,7 +81,7 @@ class MadrugadaTurtle:
 		#Sending command
 		self.sock.send(data)
 
-	def backward(self, distance):
+	def backward(self, distance=0):
 
 		inverted_angle = (self.angle + 180) % 360
 		dx, dy = self.calcDxDy(distance, inverted_angle)
@@ -92,14 +99,14 @@ class MadrugadaTurtle:
 		#Sending command
 		self.sock.send(data)
 
-	def turn(self, angle):
+	def turn(self, angle=0):
 		self.angle = (self.angle + angle) % 360
 		print(self.angle)
 
-	def turn_right(self, angle):
+	def turn_right(self, angle=0):
 		self.turn(-angle)
 
-	def turn_left(self, angle):
+	def turn_left(self, angle=0):
 		self.turn(angle)
 
 	def pen_up(self):
@@ -122,7 +129,7 @@ class MadrugadaTurtle:
 		#Sending command
 		self.sock.send(data)
 
-	def go_to(self, x, y):
+	def go_to(self, x=0, y=0):
 		if not self.inLimits(x, y): return
 
 		self.x = x
@@ -134,19 +141,6 @@ class MadrugadaTurtle:
 
 		#Sending command
 		self.sock.send(data)
-
-# #tests:
-# bd_connection = BluetoothConnectionReal()
-# sock = bluetooth.BluetoothSocket( bluetooth.RFCOMM )
-# sock.connect(bd_connection.getInfo())
-
-# turtle = Turtle(bd_connection)
-# turtle.pen_down()
-# turtle.forward(50)
-# turtle.turn(90)
-# turtle.forward(50)
-# turtle.pen_up()
-# turtle.go_to(0,0)
 
 
 

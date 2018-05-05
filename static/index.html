@@ -41,6 +41,14 @@
 
   <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
 
+  <p>
+    <button onclick="loadBluetoothDevices()">Carregar dispositivos bluetooth</button>
+  </p>
+
+  <div id="btList"></div>
+
+  <p id="btStatus"></p>
+
   <!-- <xml id="toolbox" SRC="toolbox.xml"></xml> -->
 
   <xml id="toolbox" style="display: none;">
@@ -458,12 +466,53 @@
           error: function() {
               $("h3").html("Há algum problema!");
           },
-          success: function(retorno) {
+          success: function(data) {
               $("h3").html("Comandos executados com sucesso!");
           }
       
-    });
-  }
+      });
+    }
+
+    function loadBluetoothDevices() {
+      var url="/loadDevices";
+
+      $.ajax({
+          url: url,
+          error: function() {
+              $("#btStatus").html("Não foi possível carregar dispositovos");
+          },
+          success: function(data) {
+              lista = "<ol>\n";
+              data.forEach(element => {
+                lista += ` <li><Device ${element}: 
+                          <button type="button" 
+                          onclick="selectDevice(${element})">
+                            Selecionar
+                          </button></li> `;
+              });
+              lista += "</ol>";
+              $("#btList").html(lista);
+          }
+      
+      });
+    }
+
+    function selectDevice(bdAddress) {
+      var url=`/setDevice?bdaddr=${bdAddress}`;
+
+      $.ajax({
+          url: url,
+          cache: false,
+          error: function() {
+              $("#btStatus").html("Não foi possível conectar ao dispositivo");
+          },
+          success: function(data) {
+              $("#btStatus").html(`Conectado ao dispositivo: ${bdAddress}`);
+          }
+      
+      });
+    }
+  
 
   </script>
 
