@@ -1,6 +1,7 @@
 from flask import Flask, request, url_for, redirect, jsonify
 import core.madrugada_main as madrugada
 app = Flask(__name__)
+# app.run(debug=True)
 
 @app.route('/')
 def home():

@@ -6,7 +6,7 @@
   <script src="blockly/blockly_compressed.js"></script>
   <script src="blockly/blocks_compressed.js"></script>
   <script src="blockly/python_compressed.js"></script>
-  <script src="blockly/msg/js/en.js"></script>
+  <script src="blockly/msg/js/pt-br.js"></script>
   <script src="turtle_blocks.js"></script>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -22,24 +22,36 @@
       font-weight: normal;
       font-size: 140%;
     }
+    #mainDiv {
+      width: 1200px;
+      overflow: hidden; /* will contain if #first is longer than #second */
+    }
+    #blocklyDiv {
+      height: 480px; 
+      width: 600px;
+      display: inline-block;     
+      border: 1px solid red;
+    }
+    #pythonCode {
+      height: 480px; 
+      width: 500px;
+      border: 1px solid green;
+      display: inline-block;
+      overflow: hidden; /* if you don't want #second to wrap below #first */
+    }
   </style>
 </head>
 <body>
-  <h1><a href="https://developers.google.com/blockly/">Blockly</a> &gt;
-    <a href="../index.html">Demos</a> &gt; Generating JavaScript</h1>
+  <h1>Madrugada Turtle</h1>
 
-  <p>This is a simple demo of generating code from blocks.</p>
-
-  <p>&rarr; More info on <a href="https://developers.google.com/blockly/guides/configure/web/code-generators">Code Generators</a>&hellip;</p>
-
-  <p>
-    <button onclick="showCode()">Show Python</button>
-  </p>
   <p>
     <button onclick="executeCode()">Executar!!!</button>
   </p>
 
-  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+  <div id="mainDiv">
+  <div id="blocklyDiv" onmouseover="showCode()"></div>
+  <div id="pythonCode"></div>    
+  </div>
 
   <p>
     <button onclick="loadBluetoothDevices()">Carregar dispositivos bluetooth</button>
@@ -52,7 +64,7 @@
   <!-- <xml id="toolbox" SRC="toolbox.xml"></xml> -->
 
   <xml id="toolbox" style="display: none;">
-    <category name="Turtle" colour="#805ba5">
+    <category name="Tartaruga" colour="230">
       <block type="move_forward"></block>
       <block type="move_backward"></block>
       <block type="turn">
@@ -62,7 +74,7 @@
       <block type="pen_down"></block>
       <block type="go_to"></block>
     </category>
-    <category name="Logic" colour="#5C81A6">
+    <category name="Lógica" colour="#5C81A6">
       <block type="controls_if"></block>
       <block type="logic_compare">
         <field name="OP">EQ</field>
@@ -113,7 +125,7 @@
         <field name="FLOW">BREAK</field>
       </block>
     </category>
-    <category name="Math" colour="#5C68A6">
+    <category name="Matemática" colour="#5C68A6">
       <block type="math_round">
         <field name="OP">ROUND</field>
         <value name="NUM">
@@ -213,7 +225,7 @@
       </block>
       <block type="math_random_float"></block>
     </category>
-    <category name="Text" colour="#5CA68D">
+    <!-- <category name="Text" colour="#5CA68D">
       <block type="text_charAt">
         <mutation at="true"></mutation>
         <field name="WHERE">FROM_START</field>
@@ -306,8 +318,8 @@
           </shadow>
         </value>
       </block>
-    </category>
-    <category name="Lists" colour="#745CA6">
+    </category> -->
+    <category name="Listas" colour="#745CA6">
       <block type="lists_indexOf">
         <field name="END">FIRST</field>
         <value name="VALUE">
@@ -376,8 +388,8 @@
       </block>
     </category>
     <sep></sep>
-    <category name="Variables" colour="#A65C81" custom="VARIABLE"></category>
-    <category name="Functions" colour="#9A5CA6" custom="PROCEDURE"></category>
+    <category name="Variáveis" colour="#A65C81" custom="VARIABLE"></category>
+    <category name="Funções" colour="#9A5CA6" custom="PROCEDURE"></category>
   </xml>
 
   <h3></h3>
@@ -446,7 +458,8 @@
       // Generate JavaScript code and display it.
       // Blockly.Ṕython.INFINITE_LOOP_TRAP = null;
       var code = Blockly.Python.workspaceToCode(workspace);
-      alert(code);
+      // code = code.replace(/\n/g,"<br>");
+      $("#pythonCode").html("<pre>"+code+"</pre>");
     }
 
     function executeCode() {
@@ -484,9 +497,8 @@
           success: function(data) {
               lista = "<ol>\n";
               data.forEach(element => {
-                lista += ` <li><Device ${element}: 
-                          <button type="button" 
-                          onclick="selectDevice(${element})">
+                lista += ` <li> Device ${element}: 
+                          <button onclick="selectDevice('${element}')">
                             Selecionar
                           </button></li> `;
               });

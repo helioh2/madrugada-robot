@@ -163,6 +163,7 @@
 
 #include "Vector3.h"
 
+#include "SoftwareSerial.h"
 
 
 //------------------------------------------------------------------------------
@@ -241,6 +242,8 @@ Vector3 tool_offset[NUM_TOOLS];
 int current_tool=0;
 
 long line_number;
+
+SoftwareSerial bluetooth(3, 11); // TX, RsX (Bluetooth)
 
 //------------------------------------------------------------------------------
 // METHODS
@@ -1240,6 +1243,7 @@ void setup() {
   // initialize the read buffer
   sofar=0;
   // start communications
+  bluetooth.begin(BAUD);
   Serial.begin(BAUD);
   Serial.print(F("\n\nHELLO WORLD! I AM DRAWBOT #"));
   Serial.println(robot_uid);
@@ -1424,51 +1428,51 @@ void loop_turtle()
   char buf;
   String command;
 
-  while(Serial.available() > 0)
+  while(bluetooth.available() > 0)
   {
     delay(10);
-    buf = Serial.read();
+    buf = bluetooth.read();
     //Caso seja recebido R, acende o led vermelho
     if (buf == '#') 
     {
       Serial.println("RECEBEU");
           break;                     //Exit the loop when the # is detected after the word
 
-        }  
-        command += buf; 
+    }  
+    command += buf; 
 
-      }
+  }
 
-      char first_char = command[0];
-      int i = 2;
-      if (first_char == 'M' || first_char == 'G'){
-        float par1 = read_number(command, &i);
-        i++;
-        float par2 = read_number(command, &i);
-        if (first_char == 'M') move(par1, par2);
-        else if (first_char == 'G') go_to(par, par2);
+  char first_char = command[0];
+  int i = 2;
+  if (first_char == 'M' || first_char == 'G'){
+    float par1 = read_number(command, &i);
+    i++;
+    float par2 = read_number(command, &i);
+    if (first_char == 'M') move(par1, par2);
+    else if (first_char == 'G') go_to(par1, par2);
 
-      } else if (first_char == 'U') {
-        up();
-      } else if (first_char == 'D') {
-        down();
-      } else if (first_char == 'H') {
-        teleport(homeX,homeY);
-      } else if (first_char == 'C') {
-        //TODO circle
-      }
+  } else if (first_char == 'U') {
+    pen_up();
+  } else if (first_char == 'D') {
+    pen_down();
+  } else if (first_char == 'H') {
+    teleport(homeX,homeY);
+  } else if (first_char == 'C') {
+    //TODO circle
+  }
 
-    // #if VERBOSE > 0
-    //   // echo confirmation
-    //   Serial.println(serialBuffer);
-    // #endif
+// #if VERBOSE > 0
+//   // echo confirmation
+//   Serial.println(serialBuffer);
+// #endif
 
-      // do something with the command
-      //processCommand();
-      last_cmd_time = millis();
-      ready();
+  // do something with the command
+  //processCommand();
+  last_cmd_time = millis();
+  ready();
 
-      command =""; 
+  command =""; 
     }
 
     float read_number(String command, int *j){

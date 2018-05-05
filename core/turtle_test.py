@@ -23,8 +23,8 @@ class TestTurtle(unittest.TestCase):
 
         self.turtle.forward(40)
         angle_rad = math.radians(45)
-        dx = 40 * math.cos(angle_rad)
-        dy = 40 * math.sin(angle_rad)
+        dx = math.floor(40 * math.cos(angle_rad))
+        dy = math.floor(40 * math.sin(angle_rad))
         self.assertEqual(self.turtle.x, dx)
         self.assertEqual(self.turtle.y, dy)
 

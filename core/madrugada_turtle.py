@@ -1,6 +1,7 @@
 
 import bluetooth
 import math
+import time
 
 
 class BluetoothConnection:
@@ -67,6 +68,7 @@ class MadrugadaTurtle:
 	def forward(self, distance=0):
 
 		dx, dy = self.calcDxDy(distance, self.angle)
+		dx, dy = math.floor(dx), math.floor(dy)
 
 		if not self.inLimits(self.x + dx, self.y + dy): return
 
@@ -79,12 +81,14 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		self.sock.send(data)
+		time.sleep(abs(max(dx, dy))/15)
+		self.sock.send(data+"#")
 
 	def backward(self, distance=0):
 
 		inverted_angle = (self.angle + 180) % 360
 		dx, dy = self.calcDxDy(distance, inverted_angle)
+		dx, dy = math.floor(dx), math.floor(dy)
 
 		if not self.inLimits(self.x + dx, self.y + dy): return
 
@@ -97,7 +101,8 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		self.sock.send(data)
+		time.sleep(abs(max(dx, dy))/15)
+		self.sock.send(data+"#")
 
 	def turn(self, angle=0):
 		self.angle = (self.angle + angle) % 360
@@ -117,7 +122,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		self.sock.send(data)
+		self.sock.send(data+"#")
 
 	def pen_down(self):
 		self.pen_is_down = True
@@ -127,10 +132,11 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		self.sock.send(data)
+		self.sock.send(data+"#")
 
 	def go_to(self, x=0, y=0):
 		if not self.inLimits(x, y): return
+		time.sleep(abs(max(self.x, self.y))/15)
 
 		self.x = x
 		self.y = y
@@ -140,7 +146,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		self.sock.send(data)
+		self.sock.send(data+"#")
 
 
 
