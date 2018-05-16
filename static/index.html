@@ -47,7 +47,7 @@
 
     #turtleImgDiv {
       height: 480px;
-      width: 50px;
+      width: 75px;
       display: inline-block;
       vertical-align: middle;
       /* overflow: hidden; */
@@ -55,8 +55,8 @@
     }
 
     #turtleImg {
-      height: 50px;
-      width: 50px;
+      height: 75px;
+      width: 75px;
       transform: rotate(0deg);
       
       /* if you don't want #second to wrap below #first */
@@ -66,9 +66,19 @@
 
 <body>
   <h1>Madrugada Turtle</h1>
+  <!-- <button onclick="showOrHideSave()">Salvar e Abrir Programas</button> -->
+  Salvar e abrir programas: <button id="show">Mostrar</button> 
+  <button id="hide">Esconder</button>
+  <div id="saveOpen" style="text-align: right">
+    <h3>Salvar programa:</h3>
+  Nome do arquivo: <input type="text" id="filename" value="meuprograma.xml"/>
+  <button id="download">Salvar Programa no Computador</button>
+  <h3>Abrir programa:</h3>
+  Abrir programa: <input type="file" id="file-input" />
+  </div>
 
   <p>
-    <button onclick="executeCode()">Executar!!!</button>
+    <button  onclick="executeCode()">Executar!!!</button>
   </p>
 
   <div id="mainDiv">
@@ -428,15 +438,15 @@
 
       var jsonBlocks = [];
       $.getJSON("turtle_blocks.json", function (json) {
-        console.log(json);
+        // console.log(json);
 
         $.each(json, function (i, field) {
-          console.log(field);
+          // console.log(field);
           jsonBlocks.push(field);
         });
 
 
-        console.log(jsonBlocks[0]);
+        // console.log(jsonBlocks[0]);
         jsonBlocks.forEach(element => {
           console.log(element.type);
           Blockly.Blocks[element.type] = {
@@ -445,6 +455,7 @@
             }
           };
         });
+      });
 
 
         var options = {
@@ -479,8 +490,23 @@
           }, options);
         // Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
         // workspace);
+        
+        $('#download').click(function(e) {
+          var filename = $('#filename').val();
+          var xml = Blockly.Xml.workspaceToDom(workspace);
+          var xml_text = Blockly.Xml.domToText(xml);
+          download(xml_text, filename);
+        });
 
-      });
+        $("#saveOpen").hide();
+
+        $("#hide").click(function(){
+          $("#saveOpen").hide();
+        });
+        $("#show").click(function(){
+            $("#saveOpen").show();
+        });
+        
     });
 
     function showCode() {
@@ -569,6 +595,39 @@
     }
 
     setInterval(checkAngle, 500);
+
+    function download (text, filename) {
+      if (typeof filename === "undefined") {
+        filename = false;
+      };
+      var pom = document.createElement('a');
+      pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+      if (filename) {
+        pom.setAttribute('download', filename);
+      }
+      pom.click();
+    };
+
+    function readSingleFile(e) {
+      var file = e.target.files[0];
+      if (!file) {
+        return;
+      }
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var contents = e.target.result;
+        var xml = Blockly.Xml.textToDom(contents);
+        Blockly.Xml.domToWorkspace(xml, workspace);
+      };
+      reader.readAsText(file);
+    }
+
+
+    
+
+document.getElementById('file-input')
+  .addEventListener('change', readSingleFile, false);
+
 
 
   </script>

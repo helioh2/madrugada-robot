@@ -81,7 +81,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		time.sleep(abs(max(dx, dy))/10)
+		time.sleep(max(abs(dx), abs(dy))/10)
 		self.sock.send(data+"#")
 
 	def backward(self, distance=0):
@@ -101,7 +101,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		time.sleep(abs(max(dx, dy))/10)
+		time.sleep(max(abs(dx), abs(dy))/10)
 		self.sock.send(data+"#")
 
 	def turn(self, angle=0):
@@ -138,7 +138,7 @@ class MadrugadaTurtle:
 
 	def go_to(self, x=0, y=0):
 		if not self.inLimits(x, y): return
-		time.sleep(abs(max(self.x, self.y))/10)
+		time.sleep(max(abs(self.x), abs(self.y))/10)
 
 		self.x = x
 		self.y = y
