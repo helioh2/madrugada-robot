@@ -32,6 +32,7 @@ def setupDevice(device_addr):
 def execute(code):
     turtle.pen_up()
     turtle.go_to(0,0)
+    turtle.angle = 0
     turtle.pen_down()
     exec(code)
 

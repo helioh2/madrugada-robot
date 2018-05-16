@@ -1386,19 +1386,20 @@ void sendCommand(String command) {
 
 void pen_down(){
 
-  String command1 = "GO0 F50 Z50";
-  String command2 = "GO0 F6500";
-  sendCommand(command1);
-  sendCommand(command2);
-  
+  // String command1 = "GO0 F50 Z50";
+  // String command2 = "GO0 F6500";
+  // sendCommand(command1);
+  // sendCommand(command2);
+  setPenAngle(10);
 }
 
 void pen_up() {
 
-  String command1 = "GO1 F50 Z90";
-  String command2 = "GO0 F6500";
-  sendCommand(command1);
-  sendCommand(command2);
+  // String command1 = "GO1 F50 Z90";
+  // String command2 = "GO0 F6500";
+  // sendCommand(command1);
+  // sendCommand(command2);
+  setPenAngle(50);
 }
 
 void move(float x, float y) {

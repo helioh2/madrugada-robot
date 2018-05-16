@@ -46,8 +46,8 @@ class BluetoothSocketMock():
 class MadrugadaTurtle:
 
 	def __init__(self, sock, 
-		xlimits = (-200, 200), 
-		ylimits = (-150, 150)):
+		xlimits = (-150, 150), 
+		ylimits = (-100, 100)):
 		self.x = self.y = self.angle = 0
 		self.pen_is_down = True
 		self.xlimits = xlimits
@@ -81,7 +81,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		time.sleep(abs(max(dx, dy))/15)
+		time.sleep(abs(max(dx, dy))/10)
 		self.sock.send(data+"#")
 
 	def backward(self, distance=0):
@@ -101,7 +101,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
-		time.sleep(abs(max(dx, dy))/15)
+		time.sleep(abs(max(dx, dy))/10)
 		self.sock.send(data+"#")
 
 	def turn(self, angle=0):
@@ -122,6 +122,7 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
+		time.sleep(1)
 		self.sock.send(data+"#")
 
 	def pen_down(self):
@@ -132,11 +133,12 @@ class MadrugadaTurtle:
 		print(data)
 
 		#Sending command
+		time.sleep(1)
 		self.sock.send(data+"#")
 
 	def go_to(self, x=0, y=0):
 		if not self.inLimits(x, y): return
-		time.sleep(abs(max(self.x, self.y))/15)
+		time.sleep(abs(max(self.x, self.y))/10)
 
 		self.x = x
 		self.y = y

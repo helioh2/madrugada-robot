@@ -25,3 +25,7 @@ def setDevice():
     bd_addr = request.args.get('bdaddr')
     madrugada.setupDevice(bd_addr) #pode dar erro, fazer verificacao
     return 'ok'
+
+@app.route('/getAngle')
+def getAngle():
+    return str(madrugada.turtle.angle)

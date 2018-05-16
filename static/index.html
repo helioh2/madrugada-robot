@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Blockly Demo: Generating JavaScript</title>
@@ -8,39 +9,61 @@
   <script src="blockly/python_compressed.js"></script>
   <script src="blockly/msg/js/pt-br.js"></script>
   <script src="turtle_blocks.js"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
 
   <style>
     body {
       background-color: #fff;
       font-family: sans-serif;
     }
+
     h1 {
       font-weight: normal;
       font-size: 140%;
     }
+
     #mainDiv {
       width: 1200px;
-      overflow: hidden; /* will contain if #first is longer than #second */
+      overflow: hidden;
+      /* will contain if #first is longer than #second */
     }
+
     #blocklyDiv {
-      height: 480px; 
+      height: 480px;
       width: 600px;
-      display: inline-block;     
+      display: inline-block;
       border: 1px solid red;
     }
+
     #pythonCode {
-      height: 480px; 
+      height: 480px;
       width: 500px;
       border: 1px solid green;
       display: inline-block;
-      overflow: hidden; /* if you don't want #second to wrap below #first */
+      overflow: hidden;
+      /* if you don't want #second to wrap below #first */
+    }
+
+    #turtleImgDiv {
+      height: 480px;
+      width: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      /* overflow: hidden; */
+      /* if you don't want #second to wrap below #first */
+    }
+
+    #turtleImg {
+      height: 50px;
+      width: 50px;
+      transform: rotate(0deg);
+      
+      /* if you don't want #second to wrap below #first */
     }
   </style>
 </head>
+
 <body>
   <h1>Madrugada Turtle</h1>
 
@@ -49,8 +72,9 @@
   </p>
 
   <div id="mainDiv">
-  <div id="blocklyDiv" onmouseover="showCode()"></div>
-  <div id="pythonCode"></div>    
+    <div id="blocklyDiv" onmouseover="showCode()"></div>
+    <div id="turtleImgDiv"><img src="turtle.png" id="turtleImg"/></div>
+    <div id="pythonCode"></div>
   </div>
 
   <p>
@@ -395,138 +419,156 @@
   <h3></h3>
 
   <script>
-      var workspace;
-      
-      $(document).ready(function () {
+    var workspace;
 
-        var jsonBlocks = [];
-        $.getJSON("turtle_blocks.json", function(json) {
-          console.log(json);
+    $(document).ready(function () {
 
-          $.each(json, function(i, field){
-                console.log(field);
-                jsonBlocks.push(field);
-          });
+      var jsonBlocks = [];
+      $.getJSON("turtle_blocks.json", function (json) {
+        console.log(json);
 
-       
+        $.each(json, function (i, field) {
+          console.log(field);
+          jsonBlocks.push(field);
+        });
+
+
         console.log(jsonBlocks[0]);
         jsonBlocks.forEach(element => {
-            console.log(element.type);
-            Blockly.Blocks[element.type] = {
-              init: function() {
-                this.jsonInit(element);
-              }
+          console.log(element.type);
+          Blockly.Blocks[element.type] = {
+            init: function () {
+              this.jsonInit(element);
+            }
           };
         });
 
 
-        var options = { 
-          toolbox : toolbox, 
-          collapse : true, 
-          comments : true, 
-          disable : true, 
-          maxBlocks : Infinity, 
-          trashcan : true, 
-          horizontalLayout : false, 
-          toolboxPosition : 'start', 
-          css : true, 
-          media : 'https://blockly-demo.appspot.com/static/media/', 
-          rtl : false, 
-          scrollbars : true, 
-          sounds : true, 
-          oneBasedIndex : true, 
-          zoom : {
-            controls : true, 
-            wheel : true, 
-            startScale : 1, 
-            maxScale : 3, 
-            minScale : 0.3, 
-            scaleSpeed : 1.2
+        var options = {
+          toolbox: toolbox,
+          collapse: true,
+          comments: true,
+          disable: true,
+          maxBlocks: Infinity,
+          trashcan: true,
+          horizontalLayout: false,
+          toolboxPosition: 'start',
+          css: true,
+          media: 'https://blockly-demo.appspot.com/static/media/',
+          rtl: false,
+          scrollbars: true,
+          sounds: true,
+          oneBasedIndex: true,
+          zoom: {
+            controls: true,
+            wheel: true,
+            startScale: 1,
+            maxScale: 3,
+            minScale: 0.3,
+            scaleSpeed: 1.2
           }
         };
 
-        workspace = Blockly.inject('blocklyDiv',  
-            {media: 'blockly/media/',
-            toolbox: document.getElementById('toolbox')}, options);
+        workspace = Blockly.inject('blocklyDiv',
+          {
+            media: 'blockly/media/',
+            toolbox: document.getElementById('toolbox')
+          }, options);
         // Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-                                  // workspace);
-      
+        // workspace);
+
+      });
     });
-  });
 
     function showCode() {
       // Generate JavaScript code and display it.
       // Blockly.Ṕython.INFINITE_LOOP_TRAP = null;
       var code = Blockly.Python.workspaceToCode(workspace);
       // code = code.replace(/\n/g,"<br>");
-      $("#pythonCode").html("<pre>"+code+"</pre>");
+      $("#pythonCode").html("<pre>" + code + "</pre>");
     }
 
     function executeCode() {
 
       var code = Blockly.Python.workspaceToCode(workspace);
-      var url="/executeCode";
+      var url = "/executeCode";
 
       $.ajax({
-          type: "POST",
-          url: url,
-          data: code,
-          cache: false,
-          dataType: "text",
-          beforeSend: function() {
-              $("h3").html("Executando seus comandos!!");
-          },
-          error: function() {
-              $("h3").html("Há algum problema!");
-          },
-          success: function(data) {
-              $("h3").html("Comandos executados com sucesso!");
-          }
-      
+        type: "POST",
+        url: url,
+        data: code,
+        cache: false,
+        dataType: "text",
+        beforeSend: function () {
+          $("h3").html("Executando seus comandos!!");
+        },
+        error: function () {
+          $("h3").html("Há algum problema!");
+        },
+        success: function (data) {
+          $("h3").html("Comandos executados com sucesso!");
+        }
+
       });
     }
 
     function loadBluetoothDevices() {
-      var url="/loadDevices";
+      var url = "/loadDevices";
 
       $.ajax({
-          url: url,
-          error: function() {
-              $("#btStatus").html("Não foi possível carregar dispositovos");
-          },
-          success: function(data) {
-              lista = "<ol>\n";
-              data.forEach(element => {
-                lista += ` <li> Device ${element}: 
-                          <button onclick="selectDevice('${element}')">
-                            Selecionar
-                          </button></li> `;
-              });
-              lista += "</ol>";
-              $("#btList").html(lista);
-          }
-      
+        url: url,
+        error: function () {
+          $("#btStatus").html("Não foi possível carregar dispositovos");
+        },
+        success: function (data) {
+          lista = "<ol>\n";
+          data.forEach(element => {
+            lista += ` <li> Device ${element}: 
+                <button onclick="selectDevice('${element}')">
+                  Selecionar
+                </button></li> `;
+          });
+          lista += "</ol>";
+          $("#btList").html(lista);
+        }
+
       });
     }
 
     function selectDevice(bdAddress) {
-      var url=`/setDevice?bdaddr=${bdAddress}`;
+      var url = `/setDevice?bdaddr=${bdAddress}`;
 
       $.ajax({
-          url: url,
-          cache: false,
-          error: function() {
-              $("#btStatus").html("Não foi possível conectar ao dispositivo");
-          },
-          success: function(data) {
-              $("#btStatus").html(`Conectado ao dispositivo: ${bdAddress}`);
-          }
-      
+        url: url,
+        cache: false,
+        error: function () {
+          $("#btStatus").html("Não foi possível conectar ao dispositivo");
+        },
+        success: function (data) {
+          $("#btStatus").html(`Conectado ao dispositivo: ${bdAddress}`);
+        }
+
       });
     }
-  
+
+    function checkAngle() {
+      var url = `/getAngle`;
+
+      $.ajax({
+        url: url,
+        cache: false,
+        success: function (data) {
+          $("#turtleImg").css({transform: "rotate("+(360-data)+"deg)"});
+        }
+
+      });
+    }
+
+    setInterval(checkAngle, 500);
+
 
   </script>
 
 </body>
+
 </html>
