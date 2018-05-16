@@ -73,7 +73,10 @@
 
   <div id="mainDiv">
     <div id="blocklyDiv" onmouseover="showCode()"></div>
-    <div id="turtleImgDiv"><img src="turtle.png" id="turtleImg"/></div>
+    <div id="turtleImgDiv"> 
+      <img src="turtle.png" id="turtleImg"/>
+      <div id="turtleAngle">Ângulo: 0°</div> 
+    </div>
     <div id="pythonCode"></div>
   </div>
 
@@ -559,6 +562,7 @@
         cache: false,
         success: function (data) {
           $("#turtleImg").css({transform: "rotate("+(360-data)+"deg)"});
+          $("#turtleAngle").html("Ângulo: "+data+"°");
         }
 
       });
