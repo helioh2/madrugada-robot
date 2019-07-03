@@ -13,5 +13,12 @@ Make sure to install Flask:
 sudo apt-get install python3-flask
 ```
 
+Install also dependencies for bluetooth usage:
+
+```
+sudo apt-get install bluetooth libbluetooth-dev
+sudo python3 -m pip install pybluez
+```
+
 Then run `run.sh`. If it does not run, make sure you have permission: `chmod +x ./run.sh`.
  
