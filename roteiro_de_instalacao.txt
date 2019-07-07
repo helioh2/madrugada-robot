@@ -154,7 +154,7 @@ Agora, basta conectar ao bluetooth, criar seus programas e clicar em executar.
 -----------
 
 
-# Instalação no Linux (Ubuntu/Debian/Mint):
+# Instalação no Linux (Ubuntu/Debian/Mint) [RECOMENDADO]:
 
 Abra o terminal (Ctrl+Alt+T).
 
@@ -169,11 +169,12 @@ sudo apt-get install bluetooth libbluetooth-dev
 Instale as bibliotecas necessárias (Flask e Pybluez):
 
 sudo python3 -m pip install pybluez
+sudo python3 -m pip install flask
 
 Execute o arquivo ./run.sh  OU
 Execute os comandos:
 
-set FLASK_APP=server.py
+export FLASK_APP=server.py
 python3 -m flask run
 
 Abra um navegador da web e digite o seguinte endereço:
