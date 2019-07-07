@@ -1,0 +1,194 @@
+# Instalação no Windows 10
+
+A conexão bluetooth, do Madrugada, demanda de vários softwares que são importantes para seu funcionamento. A sequência de comandos a seguir, foi seguida rigorosamente para ser utilizado no Windows 10, porém pode ser utilizado para outras versões, pois os softwares utilizam as versões mais atualizadas de cada um.
+
+## Python
+
+Antes de iniciar, verifique a versão do python instalado:
+
+No cmd digite:
+
+python --version
+
+o resultado deve ser
+
+Python 3.7.3
+
+Caso a versão do Python esteja desatualizada ou não tiver instalado, faça download, instale ou atualize a nova versão gratuitamente acessando:
+
+https://www.python.org/downloads/
+
+Ao executar o instalador, marque a caixinha 'Add Python 3.6 to PATH'.
+
+*Importante: versões anteriores do python podem não conter todas as bibliotecas necessárias para a conexão bluetooth, para evitar erros instale a última versão.
+
+**Importante: No momento da instalação do Python, marque a caixinha Add Python 3.6 to PATH. Caso contrário será necessário adicionar o diretório de instalação do Python às variáveis de ambiente do sistema (veja seção Problemas Comuns).
+
+
+## Ferramentas de Build para Visual Studio 2019 	
+
+Acesse a página de downloads do Visual Studio 2019, faça o download da ferramenta de Build para Visual Studio 2019 e instale:
+
+https://visualstudio.microsoft.com/pt-br/downloads/
+
+*durante o processo de instalação marque as opções: "Ferramentas de compilação do Visual C ++" e "Ferramentas de compilação da Plataforma Universal do Windows"
+
+Depois de instalado, coloque o caminho do diretório onde foi instalado o programa em variáveis de ambiente. Na caixa de pesquisa do Windows digite :
+
+“Editar as variáveis de ambiente do sistema” ->Enter
+
+Depois vá em:
+
+Avançado->Variáveis de Ambiente->Path->Editar->Novo-> <caminho_do_diretorio> -> Ok
+
+
+## Pip
+
+Para instalar o pip é muito simples, primeiro faça o download do pip em:
+
+https://pypi.org/project/pip/
+
+Depois é só abrir o Developer Command Prompt for VS 2019 e navegar até a pasta onde esta o arquivo :
+
+cd /caminho_do_arquivo_pip
+
+Logo em seguida execute:
+
+python get-pip.py
+
+Verifique se deu tudo certo digitando:
+
+pip freeze
+
+*você verá todos os pacotes instalados com o pip.
+
+Depois de instalado, coloque o caminho do diretório onde foi instalado o programa em variáveis de ambiente. Na caixa de pesquisa do Windows digite :
+
+“Editar as variáveis de ambiente do sistema” ->Enter
+
+Depois vá em Avançado->Variáveis de Ambiente->Path->Editar->Novo-> <caminho_do_diretorio> -> Ok
+
+
+## Pybluez
+
+Para instalar o pybluez é só digitar os seguintes comandos no Developer Command Prompt for VS 2019 ou cmd:
+
+pip install pybluez
+
+python setup.py install
+
+Depois de instalado, coloque o caminho do diretório onde foi instalado o programa em variáveis de ambiente. Na caixa de pesquisa do Windows digite :
+
+“Editar as variáveis de ambiente do sistema” ->Enter
+
+Depois vá em:
+
+ Avançado->Variáveis de Ambiente->Path->Editar->Novo-> <caminho_do_diretorio> -> Ok
+
+
+## Madrugada
+
+Faça download da firmware do Madrugada em:
+
+- https://github.com/helioh2/madrugada-robot
+
+Depois de feito o download, descompacte-a.
+
+Abra o cmd do Windows como administrador e navegue até a pasta do Madrugada para executar os seguintes comandos:
+
+- server.py
+
+- run.sh
+
+Abra um navegador da web e digite o seguinte endereço:
+
+- http://localhost:5000
+
+Depois de executado todos os comandos acima, você já pode começar a programar o Madrugada. Basta conectar ao bluetooth, criar seus programas e clicar em executar.
+
+------------------
+
+# Instalação Alternativa (testado no Windows 7)
+
+## Python
+
+Antes de iniciar, verifique a versão do python instalado:
+
+- No cmd digite:
+
+python --version
+
+- o resultado deve ser
+
+Python 3.7.3
+
+- Caso a versão do Python esteja desatualizada ou não tiver instalado, faça download, instale ou atualize a nova versão gratuitamente acessando:
+
+https://www.python.org/downloads/   (baixe a versão de 64 bits para este modo alternativo)
+
+*Importante: versões anteriores do python podem não conter todas as bibliotecas necessárias para a conexão bluetooth, para evitar erros instale a última versão
+
+**Importante: No momento da instalação do Python, marque a caixinha 'Add Python 3.6 to PATH'. Caso contrário será necessário adicionar o diretório de instalação do Python às variáveis de ambiente do sistema.
+
+
+## Comandos:
+
+No cmd, ou Git Bash, entre na pasta em que o projeto foi descompactado. Ex: cd c:\Users\<nome_do_usuario>\madrugada-robot
+
+Em seguida, execute os comandos de instalação:
+
+python -m pip install flask
+python -m pip install libs\PyBluez-0.22-cp37-cp37m-win_amd64.whl  (use a barra ‘/’ caso esteja fazendo isso no Git Bash)
+set FLASK_APP=server.py
+
+Em seguida, já é possível colocar o programa em execução usando o seguinte comando:
+
+python -m flask run
+
+Abra um navegador da web e digite o seguinte endereço:
+
+- http://localhost:5000
+
+Agora, basta conectar ao bluetooth, criar seus programas e clicar em executar.
+
+-----------
+
+
+# Instalação no Linux (Ubuntu/Debian/Mint):
+
+Abra o terminal (Ctrl+Alt+T).
+
+Instale o Python e o Pip:
+
+sudo apt-get install python3 python3-pip
+
+Instale as dependências necessárias para uso do Bluetooth:
+
+sudo apt-get install bluetooth libbluetooth-dev
+
+Instale as bibliotecas necessárias (Flask e Pybluez):
+
+sudo python3 -m pip install pybluez
+
+Execute o arquivo ./run.sh  OU
+Execute os comandos:
+
+set FLASK_APP=server.py
+python3 -m flask run
+
+Abra um navegador da web e digite o seguinte endereço:
+
+- http://localhost:5000
+
+Agora, basta conectar ao bluetooth, criar seus programas e clicar em executar.
+
+-----------
+
+
+# Problemas Comuns:
+
+O comando python não é reconhecido no cmd.
+Solução: No momento de instalação do Python, você provavelmente não marcou a caixinha Add Python 3.6 to PATH. Uma forma simples de resolver é desinstalar o Python e instalar novamente lembrando de marcar essa opção. Outra forma é ir em Iniciar -> Editar variáveis de ambiente para sua conta. Na janela que abrir, terá um painel escrito em cima: Variáveis de usuário para <Nome do Usuário>. Encontre a variável Path e dê dois cliques em cima. Em seguida, adicione ao final da caixa de texto: “;<caminho_para_a_pasta_onde_está_localizado_o_arquivo_python.exe>”. 
+
+O dispositivo bluetooth não aparece após clicar em Carregar Dispositivos Bluetooth
+Solução (Windows):  Na barra do Windows, procure pelo ícone do bluetooth, dê dois cliques em cima, vá em Adicionar Dispositivo, selecione o dispositivo da lousa, clique em Avançar, depois novamente em Avançar.
