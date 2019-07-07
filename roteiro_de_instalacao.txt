@@ -193,3 +193,4 @@ Solução: No momento de instalação do Python, você provavelmente não marcou
 
 O dispositivo bluetooth não aparece após clicar em Carregar Dispositivos Bluetooth
 Solução (Windows):  Na barra do Windows, procure pelo ícone do bluetooth, dê dois cliques em cima, vá em Adicionar Dispositivo, selecione o dispositivo da lousa, clique em Avançar, depois novamente em Avançar.
+Solução (Ubuntu): Na barra de status, clique no ícone do bluetooth e vá em Configurações de Bluetooth. Identifique o dispositivo da lousa e ative-o.
